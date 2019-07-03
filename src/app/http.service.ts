@@ -1,59 +1,91 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  isLoggedIn: boolean = false;
+  isLoggedIn: BehaviorSubject<Boolean>;
   baseUrl = 'https://api.github.com';
-  
+  authHash = Cookie.get('authHash');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router:Router) {
+    this.CheckingUserStatus();
+   }
 
+   CheckingUserStatus(){
+    if(Cookie.get('authHash') === undefined || Cookie.get('authHash') === '' || Cookie.get('authHash') === null){
+      this.isLoggedIn = new BehaviorSubject<Boolean>(false);
+    }
+    else{
+      this.isLoggedIn = new BehaviorSubject<Boolean>(true);
+    }
+  }
   authenticatingUser(httpOptions:any){
-    this.http.get(this.baseUrl+'/user',httpOptions).subscribe(
-      data => {
-        console.log(data);
-        //Cookie.set('')
-        this.isLoggedIn = true;
-      },
-      error =>{
-        console.log(error);
-      }
-      
-    )   
+    return this.http.get(this.baseUrl+'/user',httpOptions);
+  }
+  getLoggedInStatus(){
+    return this.isLoggedIn.asObservable();
   }
   getUserInfo(userId){
-    return this.http.get(this.baseUrl+'/users/'+userId);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic '+ this.authHash
+      })
+    };
+    return this.http.get(this.baseUrl+'/users/'+userId,httpOptions);
   }
   getAllUserRepos(userId){
-    return this.http.get(this.baseUrl+'/users/'+userId+'/repos');
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic '+ this.authHash
+      })
+    };
+    return this.http.get(this.baseUrl+'/users/'+userId+'/repos',httpOptions);
   }
   getAllUserStarRepos(userId){
-    return this.http.get(this.baseUrl+'/users/'+userId+'/starred');
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic '+ this.authHash
+      })
+    };
+    return this.http.get(this.baseUrl+'/users/'+userId+'/starred',httpOptions);
   }
   getAllUserGists(userId){
-    return this.http.get(this.baseUrl+'/users/'+userId+'/gists');
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic '+ this.authHash
+      })
+    };
+    return this.http.get(this.baseUrl+'/users/'+userId+'/gists',httpOptions);
   }
   getAllUserFollowers(userId){
-    return this.http.get(this.baseUrl+'/users/'+userId+'/followers');
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic '+ this.authHash
+      })
+    };
+    return this.http.get(this.baseUrl+'/users/'+userId+'/followers',httpOptions);
   }
 
   getSearchResult(search){
-    return this.http.get(this.baseUrl+'/search/users?q='+search);
-  }
-  getGithubLogin(){
     let httpOptions = {
       headers: new HttpHeaders({
-        'client_id': '2937e4fd792ffd739dbc',
-        'client_secret': '640794b49ea025c0dd8e7edfea3dcb5586b6347f',
+        'Content-Type':  'application/json',
+        'Authorization': 'Basic '+ this.authHash
       })
-    }
-    return this.http.get('https://cors.io/?https://github.com/login/oauth/authorize',httpOptions);
+    };
+    return this.http.get(this.baseUrl+'/search/users?q='+search,httpOptions);
   }
-  
+    
 }
 

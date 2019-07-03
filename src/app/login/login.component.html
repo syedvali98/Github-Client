@@ -1,4 +1,4 @@
-<div class="container login-top-padd">
+<div *ngIf="!isLoggedIn" class="container login-top-padd">
   <div class="col-md-6 col-xs-12 mx-auto login-padd shadow p-3 mb-5 bg-white rounded">
     <div class="row">
       <div class="col-12 text-center">
@@ -20,12 +20,13 @@
           <div class="col-6 mx-auto">
             <button (click)="onSubmit()" class="btn btn-primary btn-block rounded-pill"> Submit </button>
           </div>
-          <br>
-          <div class="col-6 mx-auto">
-            <button (click)="onGitAuth()" class="btn btn-primary btn-block rounded-pill"> Github Login </button>
-          </div>
         </form>
       </div>
     </div>
+  </div>
+</div>
+<div *ngIf="isLoggedIn">
+  <div class="alert alert-light text-center mx-auto" role="alert">
+    already logged in, <br> Please visit profile section.
   </div>
 </div>

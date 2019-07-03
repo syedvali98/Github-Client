@@ -20,10 +20,10 @@ export class SearchComponent implements OnInit {
 
   getResults(event: Event){
     this.search = (<HTMLInputElement>event.target).value;
-    console.log(this.search);
+    if (this.search.length > 2)
+    {
     this.http.getSearchResult(this.search).subscribe(
       data =>{
-        console.log(data)
         this.users = data["items"];
         this.result= true;
       },
@@ -32,5 +32,6 @@ export class SearchComponent implements OnInit {
       }
       
     )
+    }
   }
 }

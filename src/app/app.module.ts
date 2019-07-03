@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -26,12 +28,16 @@ import { HttpService } from './http.service';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
-      {path:'user/:userId', component:UserViewComponent},
+      {path:'user/:userId', component:UserViewComponent,canActivate:[AuthGuardService]},
       {path:'', redirectTo:'login', pathMatch:'full'},
       {path:'login', component:LoginComponent},
-      {path:'search', component:SearchComponent},
-    ])//,canActivate:[AuthGuardService]
+      {path:'search', component:SearchComponent,canActivate:[AuthGuardService]},
+      {path:'error', component:ErrorComponent},
+      {path:'**',redirectTo:'error', pathMatch:'full'}
+    ]),
   ],
   providers: [AuthGuardService,HttpService],
   bootstrap: [AppComponent]

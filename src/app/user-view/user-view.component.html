@@ -12,12 +12,10 @@
             <p *ngIf="userInfo.bio" class="card-text">Bio: <span class="text-muted">{{userInfo.bio}}</span></p>
             <p *ngIf="userInfo.followers" class="card-text">Followers: <span
                 class="text-muted">{{userInfo.followers}}</span></p>
-            <div *ngIf="userInfo.starred_url" class="card-text star-box">Starred Repos: 
+            <div *ngIf="userStarRepoInfo?.length > 0" class="card-text star-box">Starred Repos: 
               <div
                 *ngFor="let star of userStarRepoInfo"><span class="text-muted">{{star.full_name}}</span></div>
             </div>
-            <p *ngIf="userInfo.repos_url" class="card-text">Repos <span class="text-muted">{{userInfo.repos_url}}</span>
-            </p>
             <p *ngIf="userInfo.public_repos" class="card-text">No.of public repos : <span
                 class="text-muted">{{userInfo.public_repos}}</span></p>
             <p *ngIf="userInfo.public_gists" class="card-text">No.of public gists :<span

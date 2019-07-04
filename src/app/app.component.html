@@ -7,26 +7,26 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse navbarNav" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" routerLink="" (click)="navigateUser()">Profile <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" routerLink="" data-toggle="collapse" data-target=".navbarNav" (click)="navigateUser()">Profile <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" routerLink = "search">Search <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" routerLink="" data-toggle="collapse" data-target=".navbarNav" (click)="navigateSearch()" >Search <span class="sr-only">(current)</span></a>
                         </li>
                     </ul>
                 </div>
                 <div *ngIf="!isLoggedIn" class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" routerLink = "login">Login</a>
+                            <a class="nav-link" data-toggle="collapse" routerLink = "login">Login</a>
                         </li>
                     </ul>
                 </div>
                 <div *ngIf="isLoggedIn" class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" (click)="logout()" routerLink = "">Logout</a>
+                            <a class="nav-link" data-toggle="collapse" (click)="logout()" routerLink = "">Logout</a>
                         </li>
                     </ul>
                 </div>

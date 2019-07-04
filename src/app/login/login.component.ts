@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         Cookie.set('username', data['login']);
         this.router.navigate(['user', data['login']]);
         this.http.isLoggedIn.next(true);
-        this.toastr.success('Successfully Looged In', 'Welcome!');
+        this.toastr.success('Successfully Logged In', 'Welcome!');
       },
       error =>{
         console.log(error);

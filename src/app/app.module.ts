@@ -15,6 +15,7 @@ import { SearchComponent } from './search/search.component';
 import { ErrorComponent } from './error/error.component';
 import { AuthGuardService } from './auth-guard.service';
 import { HttpService } from './http.service';
+import { AutofocusDirective } from './autofocus.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpService } from './http.service';
     LoginComponent,
     UserViewComponent,
     SearchComponent,
-    ErrorComponent
+    ErrorComponent,
+    AutofocusDirective
   ],
   imports: [
     BrowserModule,

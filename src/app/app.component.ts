@@ -17,6 +17,9 @@ export class AppComponent implements OnInit{
     let username = Cookie.get('username');
     this.router.navigate(['user', username]);
   }
+  navigateSearch(){
+    this.router.navigate(['search']);
+  }
 
 
   logout(){
